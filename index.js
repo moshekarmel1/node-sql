@@ -16,10 +16,12 @@ module.exports = {
 function exec(query, config, done) {
   var connection = new Connection(config);
   connection.on('connect', function(err) {
-  // If no error, then good to proceed.
-    var request = new Request(query, function(err) {
-      if (err) {
-        done(err, null);
+    if(err){
+      done(err, null);
+    }
+    var request = new Request(query, function(_err) {
+      if (_err) {
+        done(_err, null);
       }
     });
     var result = [];
