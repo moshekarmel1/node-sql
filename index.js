@@ -18,10 +18,12 @@ function exec(query, config, done) {
   connection.on('connect', function(err) {
     if(err){
       done(err, null);
+      return;
     }
     var request = new Request(query, function(_err) {
       if (_err) {
         done(_err, null);
+        return;
       }
     });
     var result = [];
