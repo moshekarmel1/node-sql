@@ -1,0 +1,26 @@
+{
+  "name": "node-sql",
+  "version": "1.0.0",
+  "description": "A simple node wrapper for the wonderful Tedious driver.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moshekarmel1/node-sql.git"
+  },
+  "keywords": [
+    "SQL",
+    "MySQL"
+  ],
+  "author": "Moshe Karmel <MosheKarmel1@gmail.com> (http://www.MosheKarmel.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moshekarmel1/node-sql/issues"
+  },
+  "homepage": "https://github.com/moshekarmel1/node-sql#readme",
+  "dependencies": {
+    "tedious": "^1.14.0"
+  }
+}
