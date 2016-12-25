@@ -13,7 +13,7 @@ module.exports = {
  * @param {string} query  -- good old query string
  * @param {Function} done -- standard node callback
  */
-function exec(config, query, done) {
+function exec(query, config, done) {
   var connection = new Connection(config);
   connection.on('connect', function(err) {
   // If no error, then good to proceed.
