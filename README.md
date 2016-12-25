@@ -15,7 +15,7 @@ var config = {
 app.get('/', function (req, res) {
   nodeSQL.exec(`Select FirstName From tbl Where FirstName='Moshe'`, config, function(err, result){
     if(err) res.status(500).json(err);
-    res.status(200).json(result);
+    res.status(200).json(result);// [{FirstName: 'Moshe'}, {FirstName: 'Moshe'}]
   });
 })
 ```
