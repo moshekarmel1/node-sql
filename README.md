@@ -5,9 +5,11 @@
   Just call the `exec` function with a query, and get back an Array of JSON objects with column name => column value
   
 ##exec(query, config, callback)
-#####query: String - `'Select * From tbl'`.
-#####config: Object - standard [tedious config object](http://tediousjs.github.io/tedious/api-connection.html#function_newConnection).
-#####callback: Function - standard node callback, returns `(err, result)`. Where err = Error, and result = the query results.
+query: String - `'Select * From tbl'`.
+
+config: Object - standard [tedious config object](http://tediousjs.github.io/tedious/api-connection.html#function_newConnection).
+
+callback: Function - standard node callback, returns `(err, result)`. Where err = Error, and result = the query results.
 
 ```js
 var nodeSQL = require('node-sql')
