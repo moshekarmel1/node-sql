@@ -9,11 +9,22 @@ module.exports = {
 };
 /**
  * Executes a sql query
- * @param {Object} config -- standard tedious config object
  * @param {string} query  -- good old query string
+ * @param {Object} config -- standard tedious config object
  * @param {Function} done -- standard node callback
  */
 function exec(query, config, done) {
+  if(!query || (typeof query != 'string')){
+    throw new Error('Node-SQL: query was not in the correct format.');
+    return;
+  }
+  if(!config || (typeof config != 'object')){
+    throw new Error('Node-SQL: config was not in the correct format.');
+    return;
+  }
+  if(!done || (typeof done != 'function')){
+    done = function(a, b){};
+  }
   var connection = new Connection(config);
   connection.on('connect', function(err) {
     if(err){
