@@ -46,6 +46,7 @@ function exec(query, config, done) {
       result.push(row);
     });
     request.on('doneProc', function(rowCount, more) {
+      connection.close();
       done(null, result);
     });
     connection.execSql(request);
