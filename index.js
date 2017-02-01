@@ -5,7 +5,8 @@ var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 
 module.exports = {
-  exec: exec
+  exec: exec,
+  sproc: sproc
 };
 /**
  * Executes a sql query
@@ -52,3 +53,72 @@ function exec(query, config, done) {
     connection.execSql(request);
   });
 };
+
+/**
+ * Calls a sql stored proc
+ * @param {string} sproc -- stored procedure name string
+ * @param {Object} params -- key value pair of paramName => Value object
+ * @param {Object} config -- standard tedious config object
+ * @param {Function} done -- standard node callback
+ */
+function sproc(name, params, config, done) {
+  if(!name || (typeof name != 'string')){
+    throw new Error('Node-SQL: stored procedure name was not in the correct format.');
+    return;
+  }
+  if(!config || (typeof config != 'object')){
+    throw new Error('Node-SQL: config was not in the correct format.');
+    return;
+  }
+  if(!done || (typeof done != 'function')){
+    done = function(a, b){};
+  }
+  var connection = new Connection(config);
+  connection.on('connect', function(err) {
+    if(err){
+      done(err, null);
+      return;
+    }
+    var request = new Request(name, function(_err) {
+      if (_err) {
+        done(_err, null);
+        return;
+      }
+    });
+
+    if(params && (typeof params == 'object')){
+      for(var prop in params){
+        request.addParameter(prop, determineType(params[prop]), params[prop]);
+      }
+    }
+
+    var result = [];
+    request.on('row', function(columns) {
+      var row = {};
+      columns.forEach(function(column) {
+        row[column.metadata.colName] = column.value;
+      });
+      result.push(row);
+    });
+    request.on('doneProc', function(rowCount, more) {
+      connection.close();
+      done(null, result);
+    });
+    connection.callProcedure(request);
+  });
+};
+
+function determineType(val){
+  switch(typeof val){
+    case 'string':
+      return TYPES.VarChar;
+    case 'boolean':
+      return TYPES.Bit;
+    case 'number':
+      return TYPES.Int;
+    case 'date':
+      return TYPES.DateTime;
+    default:
+      return TYPES.VarChar;
+  }
+}
