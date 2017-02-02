@@ -23,9 +23,7 @@ var config = {
 }
 //result has data as an Array of JSON objects with column name => column value
 app.get('/', function (req, res) {
-  nodeSQL.exec(`
-    Select FirstName, LastName From tbl Where FirstName='Moshe'
-  `, config, function(err, result){
+  nodeSQL.exec(`Select FirstName, LastName From tbl Where FirstName='Moshe'`, config, function(err, result){
     if(err) return res.sendStatus(500);
     res.status(200).json(result);// [{FirstName: 'Moshe', LastName: 'Karmel'}]
   });
@@ -52,10 +50,8 @@ var config = {
 }
 //result has data as an Array of JSON objects with column name => column value
 app.get('/:Id', function (req, res) {
-  nodeSQL.sproc(`
-    MyDB.dbo.GetDataById
-  `, { ID: req.params.Id },  
-    config, function(err, result){
+  var params = { ID: req.params.Id };
+  nodeSQL.sproc(`MyDB.dbo.GetDataById`, params, config, function(err, result){
     if(err) return res.sendStatus(500);
     res.status(200).json(result);// [{FirstName: 'Moshe', LastName: 'Karmel'}]
   });
