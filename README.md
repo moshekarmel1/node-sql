@@ -1,4 +1,4 @@
-# node-sql
+# [node-sql](https://www.npmjs.com/package/node-sql)
 
   A simple node-style callback wrapper for the wonderful [Tedious](https://www.npmjs.com/package/tedious) driver.
 
@@ -6,7 +6,7 @@
   Query in, JSON out.
 
 ##exec(query, config, callback)
-**query**: String - `'Select * From tbl'`.
+**query**: String - standard SQL query e.g. `'Select * From tbl'`.
 
 **config**: Object - standard [tedious config object](http://tediousjs.github.io/tedious/api-connection.html#function_newConnection).
 
@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 ```
 
 ##sproc(name, params, config, callback)
-**name**: String - `MyDB.dbo.GetDataById`.
+**name**: String - stored procedure name e.g. `MyDB.dbo.GetDataById`.
 
 **params**: Object - Key Value pairs of parameter name to parameter value, e.g. `{ ID : 4 }` (the type is inferred).
 
