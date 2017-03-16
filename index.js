@@ -37,6 +37,7 @@ function exec(query, config, done) {
         done(_err, null);
         return;
       }
+      connection.close();
     });
     var result = [];
     request.on('row', function(columns) {
@@ -47,7 +48,6 @@ function exec(query, config, done) {
       result.push(row);
     });
     request.on('doneProc', function(rowCount, more) {
-      connection.close();
       done(null, result);
     });
     connection.execSql(request);
@@ -84,6 +84,7 @@ function sproc(name, params, config, done) {
         done(_err, null);
         return;
       }
+      connection.close();
     });
 
     if(params && (typeof params == 'object')){
@@ -101,7 +102,6 @@ function sproc(name, params, config, done) {
       result.push(row);
     });
     request.on('doneProc', function(rowCount, more) {
-      connection.close();
       done(null, result);
     });
     connection.callProcedure(request);
