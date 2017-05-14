@@ -49,8 +49,8 @@ function exec(query, config, done) {
       });
       result.push(row);
     });
-    request.on('doneProc', function(rowCount, more) {
-      done(null, result);
+    request.on('doneProc', function(rowCount, more, returnStatus) {
+      if(returnStatus == 0) done(null, result);
     });
     connection.execSql(request);
   });
@@ -103,8 +103,8 @@ function sproc(name, params, config, done) {
       });
       result.push(row);
     });
-    request.on('doneProc', function(rowCount, more) {
-      done(null, result);
+    request.on('doneProc', function(rowCount, more, returnStatus) {
+      if(returnStatus == 0) done(null, result);
     });
     connection.callProcedure(request);
   });
@@ -158,8 +158,8 @@ function tvp(name, tvpParamName, tvpParams, config, done) {
       });
       result.push(row);
     });
-    request.on('doneProc', function(rowCount, more) {
-      done(null, result);
+    request.on('doneProc', function(rowCount, more, returnStatus) {
+      if(returnStatus == 0) done(null, result);
     });
     connection.callProcedure(request);
   });
