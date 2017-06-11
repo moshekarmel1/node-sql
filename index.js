@@ -165,6 +165,50 @@ function tvp(name, tvpParamName, tvpParams, config, done) {
   });
 };
 
+/**
+ * Gets SQL column names from a query
+ * @param {string} query  -- good old query string
+ * @param {Object} config -- standard tedious config object
+ * @param {Function} done -- standard node callback
+ */
+function getColumnNames(query, config, done) {
+  if(!query || (typeof query != 'string')){
+    throw new Error('Node-SQL: query was not in the correct format.');
+    return;
+  }
+  if(!config || (typeof config != 'object')){
+    throw new Error('Node-SQL: config was not in the correct format.');
+    return;
+  }
+  if(!done || (typeof done != 'function')){
+    done = function(a, b){};
+  }
+  var connection = new Connection(config);
+  connection.on('connect', function(err) {
+    if(err){
+      done(err, null);
+      return;
+    }
+    var request = new Request(query, function(_err) {
+      if (_err) {
+        done(_err, null);
+        return;
+      }
+      connection.close();
+    });
+    var result = [];
+    request.on('row', function(columns) {
+      columns.forEach(function(column) {
+        result.push(column.metadata.colName);
+      });
+    });
+    request.on('doneProc', function(rowCount, more, returnStatus) {
+      if(returnStatus == 0) done(null, result);
+    });
+    connection.execSql(request);
+  });
+};
+
 function determineType(val){
   switch(typeof val){
     case 'string':
