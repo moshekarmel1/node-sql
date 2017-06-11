@@ -5,7 +5,7 @@
   Just call the `exec` function with a query, or `sproc` with a stored procedure, and get back an Array of JSON objects.
   Query in, JSON out.
 
-## exec(query, config, callback)
+## exec(query, config, callback) Execute arbitrary SQL
 **query**: String - standard SQL query e.g. `'Select * From tbl'`.
 
 **config**: Object - standard [tedious config object](http://tediousjs.github.io/tedious/api-connection.html#function_newConnection).
@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 })
 ```
 
-## sproc(name, params, config, callback)
+## sproc(name, params, config, callback) Call a stored procedure
 **name**: String - stored procedure name e.g. `MyDB.dbo.GetDataById`.
 
 **params**: Object - Key Value pairs of parameter name to parameter value, e.g. `{ ID : 4 }` (the type is inferred).
@@ -58,7 +58,7 @@ app.get('/:Id', function (req, res) {
 })
 ```
 
-## tvp(name, params, config, callback)
+## tvp(name, params, config, callback) Call a table-value parameter sproc
 **name**: String - stored procedure name e.g. `MyDB.dbo.GetDataById`.
 
 **paramName**: String - Name of the Table-Value Parameter, e.g. `Todos`.
@@ -101,7 +101,7 @@ app.post('/:Id', function (req, res) {
 })
 ```
 
-## getColumnNames(query, config, callback)
+## getColumnNames(query, config, callback) Get SQL column names
 **query**: String - standard SQL query e.g. `'Select * From tbl'`.
 
 **config**: Object - standard [tedious config object](http://tediousjs.github.io/tedious/api-connection.html#function_newConnection).

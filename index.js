@@ -8,6 +8,7 @@ module.exports = {
   exec: exec,
   sproc: sproc,
   tvp: tvp,
+  getColumnNames: getColumnNames,
   TYPES: TYPES
 };
 /**
